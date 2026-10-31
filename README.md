@@ -161,7 +161,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: MBotirjonDev/mcp-security-audit@v0
+      - uses: MBotirjonDev/mcp-security-audit@v0.1.0
         with:
           fail-on: high        # info | low | medium | high | critical | none
           sarif: mcp.sarif
