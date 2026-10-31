@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": ["Bash(npm test:*)", "Bash(git status)", "Bash(git diff:*)"],
+    "deny": ["Read(./.env)", "Read(./.env.*)", "Read(./secrets/**)"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      { "matcher": "Edit|Write", "hooks": [{ "type": "command", "command": "npx prettier --write \"$CLAUDE_FILE_PATHS\"" }] }
+    ]
+  }
+}

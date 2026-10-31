@@ -1,0 +1,9 @@
+{
+  // Cursor accepts comments in this file
+  "mcpServers": {
+    "jira": {
+      "command": "npx",
+      "args": ["jira-mcp@latest"],
+    },
+  },
+}

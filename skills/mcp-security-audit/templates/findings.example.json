@@ -1,0 +1,45 @@
+{
+  "target": "acme_web",
+  "audited_commit": "a1b2c3d",
+  "generated_at": "2026-10-31T09:00:00Z",
+  "findings": [
+    {
+      "id": "F-1",
+      "verdict": "confirmed",
+      "area": "servers",
+      "title": "git_log tool runs a shell command built from the branch argument",
+      "severity": "high",
+      "cwe": "CWE-78",
+      "leads": ["MCP-SRV-001"],
+      "location": { "file": "server/src/index.ts", "line": 9 },
+      "attacker": "Anyone who can put text in front of the agent: an issue body, a README in a cloned repo, a web page the agent fetches.",
+      "trace": [
+        "server/src/index.ts:8 registers git_log with a free-form string parameter branch",
+        "server/src/index.ts:9 passes it into exec(`git log --oneline ${branch}`), which runs /bin/sh -c",
+        "Injected text asks the agent to show the log for \"main; <command>\"; the command runs with the developer's permissions"
+      ],
+      "impact": "Arbitrary command execution on the developer machine, including reading SSH keys and cloud credentials.",
+      "fix": "execFile(\"git\", [\"log\", \"--oneline\", \"--\", branch]) and validate branch with /^[\\w./-]+$/.",
+      "verified_by": "verifier-2 (fresh pass over the tool handler and its callers)"
+    },
+    {
+      "id": "F-2",
+      "verdict": "needs_validation",
+      "area": "configs",
+      "title": "GitHub MCP server runs an unpinned package",
+      "cwe": "CWE-1357",
+      "leads": ["MCP-CFG-002"],
+      "location": { "file": ".mcp.json", "line": 5 },
+      "unresolved": "Whether the team pins it elsewhere (a global ~/.claude.json entry with the same name takes precedence for some users); run: claude mcp list"
+    },
+    {
+      "id": "F-3",
+      "verdict": "rejected",
+      "area": "instructions",
+      "title": "Agent-directed HTML comment in CLAUDE.md",
+      "leads": ["AGT-INJ-005"],
+      "location": { "file": "CLAUDE.md", "line": 3 },
+      "rejection_reason": "The comment asks agents to run the test suite before committing; written by a maintainer in the initial commit, no concealment or network access."
+    }
+  ]
+}

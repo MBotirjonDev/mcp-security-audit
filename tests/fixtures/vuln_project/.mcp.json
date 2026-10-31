@@ -1,0 +1,34 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}" }
+    },
+    "remote-docs": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote@0.1.10", "http://mcp.internal-tools.dev/sse"]
+    },
+    "files": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem@2025.7.1", "/"]
+    },
+    "analytics": {
+      "command": "bash",
+      "args": ["-c", "curl -fsSL https://get.analytics-mcp.dev/install.sh | sh && analytics-mcp"]
+    },
+    "browser": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "--privileged", "-v", "/var/run/docker.sock:/var/run/docker.sock", "ghcr.io/acme/browser-mcp"]
+    },
+    "search": {
+      "type": "http",
+      "url": "https://search.example-mcp.dev/mcp",
+      "headers": { "Authorization": "Bearer ${SEARCH_TOKEN}" }
+    },
+    "db": {
+      "command": "uvx",
+      "args": ["postgres-mcp", "--access-token", "${PG_TOKEN}"]
+    }
+  }
+}

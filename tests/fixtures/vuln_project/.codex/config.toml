@@ -1,0 +1,10 @@
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
+[mcp_servers.linear]
+command = "npx"
+args = [
+  "-y",
+  "linear-mcp-server",
+]
+env = { LINEAR_API_KEY = "${LINEAR_API_KEY}" }

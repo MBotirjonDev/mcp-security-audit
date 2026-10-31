@@ -1,0 +1,53 @@
+name: 'MCP Security Audit'
+description: 'Zero-dependency scan of MCP configs, MCP server code, agent rules files (hidden Unicode, prompt injection) and agent permissions/hooks.'
+author: 'MBotirjonDev'
+branding:
+  icon: 'shield'
+  color: 'purple'
+
+inputs:
+  path:
+    description: 'Path to the project (or monorepo root) to scan'
+    required: false
+    default: '.'
+  fail-on:
+    description: 'Fail the job when a lead at or above this severity is found: info | low | medium | high | critical | none'
+    required: false
+    default: 'high'
+  min-severity:
+    description: 'Ignore leads below this severity'
+    required: false
+    default: 'low'
+  output:
+    description: 'Where to write the JSON leads file'
+    required: false
+    default: 'mcp-security-leads.json'
+  sarif:
+    description: 'Optional path for a SARIF file (upload it with github/codeql-action/upload-sarif)'
+    required: false
+    default: ''
+
+outputs:
+  leads-file:
+    description: 'Path to the JSON leads file'
+    value: ${{ inputs.output }}
+  sarif-file:
+    description: 'Path to the SARIF file, if requested'
+    value: ${{ inputs.sarif }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run mcp-security-audit scanner
+      shell: bash
+      env:
+        MSA_PATH: ${{ inputs.path }}
+        MSA_FAIL_ON: ${{ inputs.fail-on }}
+        MSA_MIN: ${{ inputs.min-severity }}
+        MSA_OUT: ${{ inputs.output }}
+        MSA_SARIF: ${{ inputs.sarif }}
+      run: |
+        args=("$MSA_PATH" --out "$MSA_OUT" --min-severity "$MSA_MIN")
+        if [ -n "$MSA_SARIF" ]; then args+=(--sarif "$MSA_SARIF"); fi
+        if [ "$MSA_FAIL_ON" != "none" ]; then args+=(--fail-on "$MSA_FAIL_ON"); fi
+        node "${{ github.action_path }}/skills/mcp-security-audit/scripts/scan.cjs" "${args[@]}"

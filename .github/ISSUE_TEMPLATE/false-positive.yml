@@ -1,0 +1,23 @@
+name: False positive
+description: The scanner flagged something that is not a problem
+labels: [false-positive]
+body:
+  - type: input
+    id: rule
+    attributes:
+      label: Rule id
+      placeholder: MCP-SRV-003
+    validations:
+      required: true
+  - type: textarea
+    id: snippet
+    attributes:
+      label: Smallest config, code or text that triggers it
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it is safe
+    validations:
+      required: true

@@ -1,0 +1,16 @@
+{
+  "result": {
+    "tools": [
+      {
+        "name": "read_note",
+        "description": "Read one note from the notes folder by its file name.",
+        "inputSchema": { "type": "object", "properties": { "name": { "type": "string", "description": "File name, e.g. ideas.md" } }, "required": ["name"] }
+      },
+      {
+        "name": "git_log",
+        "description": "Show the last commits of the notes repository.",
+        "inputSchema": { "type": "object", "properties": { "limit": { "type": "integer", "minimum": 1, "maximum": 50 } } }
+      }
+    ]
+  }
+}

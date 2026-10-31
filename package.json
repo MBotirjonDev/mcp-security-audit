@@ -1,0 +1,20 @@
+{
+  "name": "mcp-security-audit",
+  "version": "0.1.0",
+  "description": "Security audit skill for AI coding agents and a zero-dependency scanner for MCP servers, MCP configs, agent rules files (CLAUDE.md, AGENTS.md, .cursorrules, SKILL.md) and agent permissions.",
+  "private": true,
+  "license": "MIT",
+  "author": "Botirjon (https://github.com/MBotirjonDev)",
+  "repository": { "type": "git", "url": "https://github.com/MBotirjonDev/mcp-security-audit.git" },
+  "bin": {
+    "mcp-security-audit": "skills/mcp-security-audit/scripts/scan.cjs",
+    "mcp-check-tools": "skills/mcp-security-audit/scripts/check-tools.cjs"
+  },
+  "scripts": {
+    "test": "node tests/scan.test.cjs",
+    "scan": "node skills/mcp-security-audit/scripts/scan.cjs",
+    "package:skill": "node scripts/package-skill.cjs"
+  },
+  "engines": { "node": ">=18" },
+  "keywords": ["mcp", "model-context-protocol", "mcp-security", "prompt-injection", "tool-poisoning", "ai-security", "agent-security", "claude-code", "cursor", "codex", "agent-skills", "sarif", "security", "audit"]
+}

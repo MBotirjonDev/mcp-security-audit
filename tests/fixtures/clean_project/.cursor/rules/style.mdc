@@ -1,0 +1,7 @@
+---
+description: Code style for this repository
+globs: ["**/*.ts"]
+---
+
+- Use TypeScript strict mode.
+- Never commit .env files or real API keys.

@@ -1,0 +1,26 @@
+name: New rule
+description: Propose a new MCP / agent security check
+labels: [new-rule]
+body:
+  - type: textarea
+    id: bug
+    attributes:
+      label: The pattern and what an attacker gains
+    validations:
+      required: true
+  - type: textarea
+    id: bad
+    attributes:
+      label: Vulnerable config, code or text (smallest possible)
+    validations:
+      required: true
+  - type: textarea
+    id: good
+    attributes:
+      label: Safe version
+    validations:
+      required: true
+  - type: input
+    id: ref
+    attributes:
+      label: Reference (advisory, CVE, write-up)

@@ -1,0 +1,4 @@
+[project]
+name = "ops-mcp"
+version = "0.1.0"
+dependencies = ["mcp[cli]>=1.2.0", "pyyaml>=6"]
